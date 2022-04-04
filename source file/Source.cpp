@@ -36,53 +36,43 @@ int main() {
     cin >> choice;
     if (choice == '1') {
         //TODO: blackWhite()
-        continue;
     }
     else if (choice == '2') {
         //TODO: invert()
-        continue;
     }
     else if (choice == '3') {
         merge_images();
     }
     else if (choice == '4') {
         //TODO: flip()
-        continue;
     }
     else if (choice == '5') {
         darkenOrlighten();
     }
     else if (choice == '6') {
         //TODO: rotate()
-        continue;
     }
     else if (choice == '7') {
         //TODO: detectEdges()
-        continue;
     }
     else if (choice == '8') {
         //TODO: enlarge()
-        continue;
     }
     else if (choice == '9') {
         //TODO: shrink()
-        continue;
     }
     else if (choice == 'a') {
         //TODO: mirior()
-        continue;
     }
     else if (choice == 'b') {
         //TODO: shuffle()
-        continue;
     }
     else if (choice == 'c') {
-        //TODO: blur()
-        continue;
+        //blur();
     }
     else {
-        // break or exit 
-        cout << "Thank you for using our Filters App!"
+        // break or exit
+        cout << "Thank you for using our Filters App!";
     }
     return 0;
 }
@@ -146,3 +136,4 @@ void merge_images() {
     }
     saveImage(image3);
 }
+
