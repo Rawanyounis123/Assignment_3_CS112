@@ -15,6 +15,8 @@ void darkenOrlighten();
 void merge_images();
 void black_and_white();
 void flip();
+void rotateImage();
+void invertImage();
 
 int main() {
     char choice;
@@ -45,7 +47,7 @@ int main() {
     }
     else if (choice == '2') {
         
-        //TODO: invert()
+        invertImage();
         
     }
     else if (choice == '3') {
@@ -55,7 +57,7 @@ int main() {
     }
     else if (choice == '4') {
         
-        flip()
+        flip();
             
     }
     else if (choice == '5') {
@@ -65,7 +67,7 @@ int main() {
     }
     else if (choice == '6') {
         
-        //TODO: rotate()
+        rotateImage();
         
     }
     else if (choice == '7') {
@@ -175,6 +177,14 @@ void merge_images() {
     saveImage(image3);
 }
 
+//this function is to invert the image and produce the negative output of the picture.
+void invertImage() {
+  for (int i = 0; i < SIZE; i++) {
+    for (int j = 0; j< SIZE; j++) {
+        image[i][j] = 255 - image[i][j];
+    }
+  }
+}
 
 void flip() {
 
@@ -206,6 +216,25 @@ void flip() {
   }
 }
 
+//this function is to rotate the image.
+void rotateImage() {
+    int choice;
+    cout<<"Enter the degree you want to rotate the image with \n 1.90 degrees \n 2.180 degrees \n 3.270 degrees";
+    cin>>choice;
+    char tempArr[SIZE][SIZE];
+    for (int countRotations = 0; countRotations < choice; countRotations++) {
+        for (int i = 0; i < SIZE; i++){
+            for (int j =0; j<SIZE; j++){
+                tempArr[i][j] = image[i][j];
+            }
+        }
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j< SIZE; j++) {
+                image[j][SIZE-1-i] = tempArr[i][j];
+            }
+        }
+    }
+}
 
 void black_and_white() {
     
