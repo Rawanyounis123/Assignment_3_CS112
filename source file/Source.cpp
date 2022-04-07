@@ -13,6 +13,8 @@ void loadImage(unsigned char image[SIZE][SIZE]);
 void saveImage(unsigned char image[SIZE][SIZE]);
 void darkenOrlighten();
 void merge_images();
+void black_and_white();
+void flip();
 
 int main() {
     char choice;
@@ -33,49 +35,81 @@ int main() {
         << "c - Blur Image\n"
         //        << "s - Save the image to a file\n"
         << "0 - Exit\n";
+    
     cin >> choice;
+    
     if (choice == '1') {
-        //TODO: blackWhite()
+        
+        black_and_white()
+        
     }
     else if (choice == '2') {
+        
         //TODO: invert()
+        
     }
     else if (choice == '3') {
+        
         merge_images();
+        
     }
     else if (choice == '4') {
-        //TODO: flip()
+        
+        flip()
+            
     }
     else if (choice == '5') {
+        
         darkenOrlighten();
+        
     }
     else if (choice == '6') {
+        
         //TODO: rotate()
+        
     }
     else if (choice == '7') {
+        
         //TODO: detectEdges()
+        
     }
     else if (choice == '8') {
+        
         //TODO: enlarge()
+        
     }
     else if (choice == '9') {
+        
         //TODO: shrink()
+        
     }
     else if (choice == 'a') {
+        
         //TODO: mirior()
+        
     }
     else if (choice == 'b') {
+        
         //TODO: shuffle()
+        
     }
     else if (choice == 'c') {
+        
         //blur();
+        
     }
     else {
+        
         // break or exit
+        
         cout << "Thank you for using our Filters App!";
+        
     }
+    
     return 0;
+    
 }
+
 
 void loadImage(unsigned char image[SIZE][SIZE]) {
     char imageFileName[100];
@@ -89,6 +123,7 @@ void loadImage(unsigned char image[SIZE][SIZE]) {
     readGSBMP(imageFileName, image);
 }
 
+
 void saveImage(unsigned char image[SIZE][SIZE]) {
     char imageFileName[100];
 
@@ -100,6 +135,7 @@ void saveImage(unsigned char image[SIZE][SIZE]) {
     strcat(imageFileName, ".bmp");
     writeGSBMP(imageFileName, image);
 }
+
 
 void darkenOrlighten() {
     loadImage(image1);
@@ -126,6 +162,8 @@ void darkenOrlighten() {
     }
     saveImage(image1);
 }
+
+
 void merge_images() {
     loadImage(image1);
     loadImage(image2);
@@ -136,4 +174,91 @@ void merge_images() {
     }
     saveImage(image3);
 }
+
+
+void flip() {
+
+    string alignment;
+    cout<<"Do you want to flip the image (v)ertically or (h)orozontally?";
+    cin >> alignment;
+
+    if (alignment == "h"){
+
+        for (int i = 0; i < SIZE/2; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                int temp = image[i][j];
+                image[i][j]=image[SIZE-i][j];
+                image[SIZE-i][j]=temp;
+        }
+     }
+   }
+
+  else if (alignment == "v"){
+
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE/2; j++) {
+            int temp = image[i][j];
+            image[i][j]=image[i][SIZE-j];
+            image[i][SIZE-j]=temp;
+        }
+
+    }
+  }
+}
+
+
+void black_and_white() {
+    
+  long avrg = 0, avrg2 = 0, avrg3 =0  ;
+
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+            if (image [i][j] < 127){
+                avrg += image[i][j];
+            }
+        }
+    }
+    
+    avrg/=(SIZE*SIZE);
+
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+
+            if (image [i][j] > avrg){
+
+                avrg2 += image[i][j];
+                
+            }
+        }
+    }
+    
+    avrg2/=(SIZE*SIZE);
+
+     for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+
+            if (image [i][j] > avrg2){
+
+                avrg3 += image[i][j];
+                
+            }
+        }
+     }
+    
+    avrg3/=(SIZE*SIZE);
+
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+
+            if (image [i][j] > avrg3){
+
+                image[i][j] = 255;
+            }
+            else {
+                image[i][j] = 0;
+            }
+        }
+    }
+}
+
 
