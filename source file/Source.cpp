@@ -8,7 +8,10 @@ using namespace std;
 unsigned char image1[SIZE][SIZE];
 unsigned char image2[SIZE][SIZE];
 unsigned char image3[SIZE][SIZE];
+unsigned char image[SIZE][SIZE];
 
+void loadImage ();
+void saveImage ();
 void loadImage(unsigned char image[SIZE][SIZE]);
 void saveImage(unsigned char image[SIZE][SIZE]);
 void darkenOrlighten();
@@ -20,6 +23,8 @@ void invertImage();
 
 int main() {
     char choice;
+
+    loadImage();
 
     cout << "Welcome to our Filters App! \n"
         << "Please select a filter number to apply or 0 to exit: \n "
@@ -37,81 +42,108 @@ int main() {
         << "c - Blur Image\n"
         //        << "s - Save the image to a file\n"
         << "0 - Exit\n";
-    
+
     cin >> choice;
-    
+
     if (choice == '1') {
-        
-        black_and_white()
-        
+
+        black_and_white();
+
     }
     else if (choice == '2') {
-        
+
         invertImage();
-        
+
     }
     else if (choice == '3') {
-        
+
         merge_images();
-        
+
     }
     else if (choice == '4') {
-        
+
         flip();
-            
+
     }
     else if (choice == '5') {
-        
+
         darkenOrlighten();
-        
+
     }
     else if (choice == '6') {
-        
+
         rotateImage();
-        
+
     }
     else if (choice == '7') {
-        
+
         //TODO: detectEdges()
-        
+
     }
     else if (choice == '8') {
-        
+
         //TODO: enlarge()
-        
+
     }
     else if (choice == '9') {
-        
+
         //TODO: shrink()
-        
+
     }
     else if (choice == 'a') {
-        
+
         //TODO: mirior()
-        
+
     }
     else if (choice == 'b') {
-        
+
         //TODO: shuffle()
-        
+
     }
     else if (choice == 'c') {
-        
+
         //blur();
-        
+
     }
     else {
-        
+
         // break or exit
-        
+
         cout << "Thank you for using our Filters App!";
-        
+
     }
-    
+    saveImage();
     return 0;
-    
+
 }
 
+
+//to load the image from its new directory
+void loadImage () {
+   char imageFileName[100];
+
+   // Get gray scale image file name
+   cout<<"Welcome user!";
+   cout << "Enter the source image file name: ";
+   cin >> imageFileName;
+
+   // Add to it .bmp extension and load image
+   strcat (imageFileName, ".bmp");
+   readGSBMP(imageFileName, image);
+}
+
+//To save the new image
+void saveImage () {
+   char imageFileName[100];
+
+   // Get gray scale image target file name
+   cout << "Enter the target image file name: ";
+   cin >> imageFileName;
+
+   // Add to it .bmp extension and load image
+   strcat (imageFileName, ".bmp");
+   writeGSBMP(imageFileName, image);
+}
 
 void loadImage(unsigned char image[SIZE][SIZE]) {
     char imageFileName[100];
@@ -237,7 +269,7 @@ void rotateImage() {
 }
 
 void black_and_white() {
-    
+
   long avrg = 0, avrg2 = 0, avrg3 =0  ;
 
     for (int i = 0; i < SIZE; i++) {
@@ -247,7 +279,7 @@ void black_and_white() {
             }
         }
     }
-    
+
     avrg/=(SIZE*SIZE);
 
     for (int i = 0; i < SIZE; i++) {
@@ -256,11 +288,11 @@ void black_and_white() {
             if (image [i][j] > avrg){
 
                 avrg2 += image[i][j];
-                
+
             }
         }
     }
-    
+
     avrg2/=(SIZE*SIZE);
 
      for (int i = 0; i < SIZE; i++) {
@@ -269,11 +301,11 @@ void black_and_white() {
             if (image [i][j] > avrg2){
 
                 avrg3 += image[i][j];
-                
+
             }
         }
      }
-    
+
     avrg3/=(SIZE*SIZE);
 
     for (int i = 0; i < SIZE; i++) {
@@ -289,5 +321,4 @@ void black_and_white() {
         }
     }
 }
-
 
