@@ -24,8 +24,6 @@ void invertImage();
 int main() {
     char choice;
 
-    loadImage();
-
     cout << "Welcome to our Filters App! \n"
         << "Please select a filter number to apply or 0 to exit: \n "
         << "1- Black & White Filter \n"
@@ -46,14 +44,14 @@ int main() {
     cin >> choice;
 
     if (choice == '1') {
-
+        loadImage();
         black_and_white();
-
+        saveImage();
     }
     else if (choice == '2') {
-
+        loadImage();
         invertImage();
-
+        saveImage();
     }
     else if (choice == '3') {
 
@@ -61,9 +59,9 @@ int main() {
 
     }
     else if (choice == '4') {
-
+        loadImage();
         flip();
-
+        saveImage();
     }
     else if (choice == '5') {
 
@@ -71,9 +69,9 @@ int main() {
 
     }
     else if (choice == '6') {
-
+        loadImage();
         rotateImage();
-
+        saveImage();
     }
     else if (choice == '7') {
 
@@ -112,7 +110,6 @@ int main() {
         cout << "Thank you for using our Filters App!";
 
     }
-    saveImage();
     return 0;
 
 }
@@ -321,4 +318,3 @@ void black_and_white() {
         }
     }
 }
-
