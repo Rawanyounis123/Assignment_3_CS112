@@ -23,8 +23,8 @@ void invertImage();
 
 int main() {
     char choice;
-
-    cout << "Welcome to our Filters App! \n"
+    while (true){
+        cout << "Welcome to our Filters App! \n"
         << "Please select a filter number to apply or 0 to exit: \n "
         << "1- Black & White Filter \n"
         << "2 - Invert Filter\n"
@@ -38,78 +38,60 @@ int main() {
         << "a - Mirror 1 / 2 Image\n"
         << "b - Shuffle Image\n"
         << "c - Blur Image\n"
-        //        << "s - Save the image to a file\n"
+        << "s - Save the image to a file\n"
         << "0 - Exit\n";
 
-    cin >> choice;
-
-    if (choice == '1') {
-        loadImage();
-        black_and_white();
-        saveImage();
+        cin >> choice;
+        if (choice == '1') {
+            loadImage();
+            black_and_white();
+        }
+        else if (choice == '2') {
+            loadImage();
+            invertImage();
+        }
+        else if (choice == '3') {
+            merge_images();
+        }
+        else if (choice == '4') {
+            loadImage();
+            flip();
+        }
+        else if (choice == '5') {
+            loadImage();
+            darkenOrlighten();
+        }
+        else if (choice == '6') {
+            loadImage();
+            rotateImage();
+        }
+        else if (choice == '7') {
+            //TODO: detectEdges()
+        }
+        else if (choice == '8') {
+            //TODO: enlarge()
+        }
+        else if (choice == '9') {
+            //TODO: shrink()
+        }
+        else if (choice == 'a') {
+            //TODO: mirior()
+        }
+        else if (choice == 'b') {
+            //TODO: shuffle()
+        }
+        else if (choice == 'c') {
+            //blur();
+        }
+        else if (choice == 's'){
+            saveImage();
+        }
+        else {
+            cout << "Thank you for using our Filters App!";
+            break;
+        }
     }
-    else if (choice == '2') {
-        loadImage();
-        invertImage();
-        saveImage();
-    }
-    else if (choice == '3') {
 
-        merge_images();
-
-    }
-    else if (choice == '4') {
-        loadImage();
-        flip();
-        saveImage();
-    }
-    else if (choice == '5') {
-
-        darkenOrlighten();
-
-    }
-    else if (choice == '6') {
-        loadImage();
-        rotateImage();
-        saveImage();
-    }
-    else if (choice == '7') {
-
-        //TODO: detectEdges()
-
-    }
-    else if (choice == '8') {
-
-        //TODO: enlarge()
-
-    }
-    else if (choice == '9') {
-
-        //TODO: shrink()
-
-    }
-    else if (choice == 'a') {
-
-        //TODO: mirior()
-
-    }
-    else if (choice == 'b') {
-
-        //TODO: shuffle()
-
-    }
-    else if (choice == 'c') {
-
-        //blur();
-
-    }
-    else {
-
-        // break or exit
-
-        cout << "Thank you for using our Filters App!";
-
-    }
     return 0;
 
 }
@@ -169,7 +151,6 @@ void saveImage(unsigned char image[SIZE][SIZE]) {
 
 
 void darkenOrlighten() {
-    loadImage(image1);
     char choice;
 
     cout << "Do you want to (d)arken or (l)ighten?  \n"
@@ -187,11 +168,10 @@ void darkenOrlighten() {
     else if (choice == 'l') {
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
-                image1[i][j] = image1[i][j] + 0.5 * (SIZE - image1[i][j]);
+                image[i][j] = image[i][j] + 0.5 * (SIZE - image[i][j]);
             }
         }
     }
-    saveImage(image1);
 }
 
 
