@@ -1,3 +1,14 @@
+/*  FCI – Programming 1 – 2022 - Assignment 3
+    Program Name: CS112- 2022 – S25&26 -20210493-20210501-20210524-A3-Part1.cpp
+    Last Modification Date: 17/04/2022
+    Author1 and ID and Group: Salma Gamal
+    Author2 and ID and Group: Laila Hesham
+    Author3 and ID and Group: Rawan Younis
+    Teaching Assistant: Eng. Mahmoud Fateaha
+    Purpose:Purpose: A filters application that allows user to choose to apply
+                     one of 9 filters to a gray-scale image.
+*/
+
 #include <iostream>
 #include <fstream>
 #include <cstring>
@@ -28,7 +39,7 @@ int main() {
     while (true){
         cout << "Welcome to our Filters App! \n"
         << "Please select a filter number to apply or 0 to exit: \n"
-        << "1- Black & White Filter \n"
+        << "1 - Black & White Filter \n"
         << "2 - Invert Filter\n"
         << "3 - Merge Filter\n"
         << "4 - Flip Image\n"
@@ -289,7 +300,7 @@ void rotateImage() {
     }
 }
 
-
+//this function is to shrink the image.
 void shrinkImage() {
     int choice, scale;
     cout << "Shrink to \n"
@@ -324,8 +335,22 @@ void shrinkImage() {
         }
     }
 
+    // make blanks white
+    for (int i = (SIZE/scale); i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+                image[i][j] = 255;
+        }
+    }
+
+    for (int i = 0; i < (SIZE / scale); i++) {
+        for (int j = (SIZE / scale); j < SIZE; j++) {
+                image[i][j] = 255;
+        }
+    }
 
 }
+
+//this function is to blur the image.
 void blurImage() {
     for (int i = 0; i < SIZE; i++) {
         for (int j = 0; j < SIZE; j++) {
