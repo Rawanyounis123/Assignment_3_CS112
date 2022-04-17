@@ -20,6 +20,8 @@ void mergeImages();
 void flipImage();
 void rotateImage();
 void darkenLighten();
+void shrinkImage();
+void blurImage();
 
 int main() {
     char choice;
@@ -74,7 +76,8 @@ int main() {
             //TODO: enlarge()
         }
         else if (choice == '9') {
-            //TODO: shrink()
+            loadImage(image1);
+            shrinkImage();
         }
         else if (choice == 'a') {
             //TODO: mirior()
@@ -83,7 +86,8 @@ int main() {
             //TODO: shuffle()
         }
         else if (choice == 'c') {
-            //blur();
+            loadImage();
+            blurImage();
         }
         else if (choice == 's'){
             saveImage();
@@ -265,8 +269,8 @@ void flipImage() {
 void rotateImage() {
     int choice;
 
-    cout << "Enter the degree you want to rotate the image with
-         <<\n 1.90 degrees \n 2.180 degrees \n 3.270 degrees";
+    cout << "Enter the degree you want to rotate the image with"
+         <<"\n 1.90 degrees \n 2.180 degrees \n 3.270 degrees";
     cin >> choice;
 
     char tempArr[SIZE][SIZE];
@@ -285,3 +289,55 @@ void rotateImage() {
     }
 }
 
+
+void shrinkImage() {
+    int choice, scale;
+    cout << "Shrink to \n"
+         << "1.(1/2)\n"
+         << "2.(1/3)\n"
+         << "3.(1/4)\n";
+    cin >> choice;
+
+    if (choice == 1){
+        scale = 2;
+    }
+    else  if (choice == 2){
+        scale = 3;
+    }
+    else  if (choice == 3){
+        scale = 4;
+    }
+
+    int row = -1 ;
+    for (int i = 0; i < SIZE; i+=scale) {
+        int column = 0;
+        row ++;
+        for (int j = 0; j < SIZE; j+=scale) {
+            int ave = 0;
+            for (int k = 0; k < scale; k++){
+                for (int m = 0; m < scale; m++){
+                    ave += image1[i+k][j+m];
+                }
+            }
+            image[row][column] = ave / (scale * scale);
+            column ++;
+        }
+    }
+
+
+}
+void blurImage() {
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+            int ave = 0;
+            for (int k = 0; k < 9; k++){
+                for (int m = 0; m < 9; m++){
+                    ave += image[i+k][j+m];
+                }
+            }
+            image[i][j] = (ave / 81);
+
+        }
+    }
+
+}
