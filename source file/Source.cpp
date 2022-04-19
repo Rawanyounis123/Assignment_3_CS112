@@ -1,5 +1,5 @@
 /*  FCI – Programming 1 – 2022 - Assignment 3
-    Program Name: CS112- 2022 – S25&26 -20210493-20210501-20210524-A3-Part1.cpp
+    Program Name: CS112- 2022 – S25&26 -20210493-20210501-20210524-A3-full.cpp
     Last Modification Date: 17/04/2022
     Author1 and ID and Group: Salma Gamal
     Author2 and ID and Group: Laila Hesham
@@ -227,7 +227,7 @@ void darkenLighten() {
     if (c == 'd') {
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
-                image1[i][j] /= 2;
+                image[i][j] /= 2;
             }
         }
     } // lighten image by 50%

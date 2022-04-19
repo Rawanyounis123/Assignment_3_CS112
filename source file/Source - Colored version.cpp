@@ -18,11 +18,12 @@
 using namespace std;
 
 unsigned char image[SIZE][SIZE][RGB];
+unsigned char image1[SIZE][SIZE][RGB];
+unsigned char image2[SIZE][SIZE][RGB];
 
 void loadImage (unsigned char image[SIZE][SIZE][RGB]);
 void loadImage ();
 void saveImage ();
-
 
 void mergeImages();
 void darkenLighten();
@@ -57,7 +58,7 @@ int main() {
             //TO DO
         }
         else if (choice == '3') {
-            //TO DO
+            mergeImages();
         }
         else if (choice == '4') {
             //TO DO
@@ -66,7 +67,8 @@ int main() {
             //TO DO
         }
         else if (choice == '6') {
-            //TO DO
+            loadImage();
+            darkenLighten();
         }
         else if (choice == '7') {
             //TODO: detectEdges()
@@ -75,7 +77,8 @@ int main() {
             //TODO: enlarge()
         }
         else if (choice == '9') {
-            //TO DO
+            loadImage(image1);
+            shrinkImage();
         }
         else if (choice == 'a') {
             //TODO: mirior()
@@ -84,7 +87,8 @@ int main() {
             //TODO: shuffle()
         }
         else if (choice == 'c') {
-            //TO DO
+            loadImage();
+            blurImage();
         }
         else if (choice == 's'){
             saveImage();
@@ -139,3 +143,112 @@ void loadImage(unsigned char image[SIZE][SIZE][RGB]) {
 }
 
 
+//Given user choice, this function lightens or darkens an image
+void darkenLighten() {
+    char c;
+
+    cout << "Do you want to (d)arken or (l)ighten?  \n";
+    cin >> c;
+
+    // darken image by 50%
+    if (c == 'd') {
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                for (int n = 0; n < RGB; n++) {
+                    image[i][j][n] /= 2;
+                }
+            }
+        }
+    } // lighten image by 50%
+    else if (c == 'l') {
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                for (int n = 0; n < RGB; n++) {
+                    image[i][j][n] = image[i][j][n] + 0.5 * (SIZE - image[i][j][n]);
+                }
+            }
+        }
+    }
+}
+//this function merge two images
+void mergeImages() {
+    loadImage(image1);
+    loadImage(image2);
+    int sum = 0;
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+            for (int k = 0; k < RGB; k++) {
+                image[i][j][k]  = (image1[i][j][k] + image2[i][j][k] )/2;
+
+            }
+        }
+    }
+
+}
+
+
+//this function is to shrink the image.
+void shrinkImage() {
+    int choice, scale;
+    cout << "Shrink to \n"
+         << "1.(1/2)\n"
+         << "2.(1/3)\n"
+         << "3.(1/4)\n";
+    cin >> choice;
+
+    if (choice == 1){
+        scale = 2;
+    }
+    else  if (choice == 2){
+        scale = 3;
+    }
+    else  if (choice == 3){
+        scale = 4;
+    }
+
+    int row = -1 ;
+    for (int i = 0; i < SIZE; i+=scale) {
+        int column = 0;
+        row ++;
+        for (int j = 0; j < SIZE; j+=scale) {
+            for (int r = 0; r < RGB; r++) {
+                image[row][column][r] = image1[i][j][r];
+            }
+            column ++;
+        }
+    }
+
+    // make blanks white
+    for (int i = (SIZE/scale); i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+            for (int r = 0; r < RGB; r++) {
+                image[i][j][r] = 255;
+            }
+        }
+    }
+
+    for (int i = 0; i < (SIZE / scale); i++) {
+        for (int j = (SIZE / scale); j < SIZE; j++) {
+            for (int r = 0; r < RGB; r++) {
+                image[i][j][r] = 255;
+            }
+        }
+    }
+}
+
+//this function is to blur the image.
+void blurImage() {
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+            for (int r = 0; r < RGB; r++) {
+                int ave = 0;
+                for (int k = 0; k < 9; k++){
+                    for (int m = 0; m < 9; m++){
+                            ave += image[i+k][j+m][r];
+                    }
+                }
+                image[i][j][r] = (ave / 81);
+            }
+        }
+    }
+}
