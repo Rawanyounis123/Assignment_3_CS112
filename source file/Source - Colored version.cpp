@@ -28,6 +28,7 @@ void saveImage ();
 void blackandwhite();
 void mergeImages();
 void darkenLighten();
+void detectEdges();
 void flip();
 void shrinkImage();
 void blurImage();
@@ -58,6 +59,7 @@ int main() {
 
         cin >> choice;
         if (choice == '1') {
+            loadImage();
             blackandwhite()
             break;
         }
@@ -71,6 +73,7 @@ int main() {
             break;
         }
         else if (choice == '4') {
+            loadImage();
             flip()
             break;
         }
@@ -85,7 +88,8 @@ int main() {
             break;
         }
         else if (choice == '7') {
-            //TODO: detectEdges()
+            loadImage();
+            detectEdges();
             break;
         }
         else if (choice == '8') {
@@ -99,6 +103,7 @@ int main() {
             break;
         }
         else if (choice == 'a') {
+            loadImage();
             Mirror()
             break;
         }
@@ -674,4 +679,37 @@ void flip() {
         }
     }
 }
+void detectEdges() {
+
+      for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+
+                if (image[i][j][0] +image[i][j][1]+image[i][j][2] > 382){
+
+                    image[i][j][0] = 255;
+                    image[i][j][1] = 255;
+                    image[i][j][2] = 255;
+                }
+                else {
+                    image[i][j][0] = 0;
+                    image[i][j][1] = 0;
+                    image[i][j][2] = 0;
+                }
+
+    }
+}
+
+      for (int i = 0 ; i <255; i++){
+        for (int j = 0 ; j < 255; j++){
+            for (int k = 0 ; k < RGB; k++){
+            if (image[i][j][k] != image[i][j+1][k] || image[i][j][k] != image[i+1][j][k]){
+
+                image[i][j][k] =0;}
+
+            else if (image[i][j][k] == image[i][j+1][k] || image[i][j][k] == image[i+1][j][k]){
+                image[i][j][k] = 255;
+            }
+
+    }
+}}}
 
