@@ -25,12 +25,15 @@ void loadImage (unsigned char image[SIZE][SIZE][RGB]);
 void loadImage ();
 void saveImage ();
 
+void blackandwhite();
 void mergeImages();
 void darkenLighten();
+void flip();
 void shrinkImage();
 void blurImage();
 void invertImage();
 void enlarge();
+void Mirror();
 void shuffle();
 void rotateImage();
 
@@ -55,7 +58,7 @@ int main() {
 
         cin >> choice;
         if (choice == '1') {
-            //TO DO
+            blackandwhite()
             break;
         }
         else if (choice == '2') {
@@ -68,7 +71,7 @@ int main() {
             break;
         }
         else if (choice == '4') {
-            //TO DO
+            flip()
             break;
         }
         else if (choice == '5') {
@@ -96,7 +99,7 @@ int main() {
             break;
         }
         else if (choice == 'a') {
-            //TODO: mirior()
+            Mirror()
             break;
         }
         else if (choice == 'b') {
@@ -471,6 +474,202 @@ void rotateImage() {
 
 
 
+            }
+        }
+    }
+}
+//black and white filter
+void blackandwhite() {
+
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+
+            if (image[i][j][0] +image[i][j][1]+image[i][j][2] > 382){
+
+                image[i][j][0] = 255;
+                image[i][j][1] = 255;
+                image[i][j][2] = 255;
+            }
+            else {
+                image[i][j][0] = 0;
+                image[i][j][1] = 0;
+                image[i][j][2] = 0;
+                
+            }
+        }
+    }
+}
+//mirror half an image filter
+void Mirror()
+{
+    string order;
+    cout << "Please choose which half to mirror : Left1/2, Right1/2, Upper1/2 and Lower1/2"<<endl;
+    cin >> order;
+
+    if (order == "upper1/2")
+    {
+        for (int i = 0 ; i <SIZE/2 ; i++)
+        {
+            for (int j = 0 ; j<SIZE ; j++)
+            {
+                for (int k = 0 ; k < RGB ; k++){
+
+                    image[i][j][k] = image[i][j][k];
+
+                }
+            }
+
+         for (int i = SIZE/2 ; i < SIZE ; i++)
+            {
+                for (int j =0; j < SIZE ; j++)
+                {
+                    for (int k = 0 ; k < RGB ; k++)
+                    {
+                        image[i][j][k]=image[SIZE-i][j][k];
+                    }
+                }
+            }
+        }
+    }
+    else if (order == "left1/2"){
+
+    for (int i = 0 ; i <SIZE ; i++)
+    {
+        for (int j = 0 ; j<SIZE/2 ; j++)
+        {
+            for (int k = 0 ; k < RGB ; k++)
+                {
+                    image[i][j][k] = image[i][j][k];
+                }
+        }
+
+     for (int i = 0 ; i < SIZE ; i++)
+        {
+            for (int j = SIZE/2; j < SIZE ; j++)
+            {
+                for (int k = 0 ; k < RGB ; k++)
+                {
+
+                image[i][j][k]=image[i][SIZE - j][k];
+
+                }
+
+            }
+        }
+    }
+}
+    else if (order == "lower1/2"){
+
+    for (int i = 0; i < SIZE/2; i++){
+
+        for (int j = 0; j < SIZE; j++){
+
+            for (int k = 0 ; k < RGB ; k++)
+            {
+                int temp = image[i][j][k];
+                image[i][j][k]=image[SIZE-i][j][k];
+                image[SIZE-i][j][k]=temp;
+            }
+        }
+    }
+
+         for (int i = 0 ; i <SIZE/2 ; i++)
+        {
+            for (int j = 0 ; j<SIZE ; j++)
+            {
+                for (int k = 0 ; k < RGB ; k++)
+                    {
+
+                    image[i][j][k] = image[i][j][k];
+
+                    }
+            }
+
+         for (int i = SIZE/2 ; i < SIZE ; i++)
+            {
+                for (int j =0; j < SIZE ; j++)
+                {
+                    for (int k = 0 ; k < RGB ; k++)
+                    {
+
+                    image[i][j][k]=image[SIZE-i][j][k];
+
+                    }
+                }
+            }
+        }
+    }
+    else if (order == "right1/2"){
+        for (int i = 0; i < SIZE; i++){
+
+            for (int j = 0; j < SIZE/2; j++){
+
+                for (int k = 0 ; k < RGB ; k++)
+                {
+
+                int temp = image[i][j][k];
+                image[i][j][k]=image[i][SIZE-j][k];
+                image[i][SIZE-j][k]=temp;
+                }
+            }
+        }
+
+        for (int i = 0 ; i <SIZE ; i++)
+        {
+            for (int j = 0 ; j<SIZE/2 ; j++)
+            {
+                for (int k = 0 ; k < RGB ; k++)
+
+                    {
+
+                    image[i][j][k] = image[i][j][k];
+
+                    }
+            }
+
+         for (int i = 0 ; i < SIZE ; i++)
+            {
+                for (int j = SIZE/2; j < SIZE ; j++)
+                {
+                    for (int k = 0 ; k < RGB ; k++)
+                    {
+
+                    image[i][j][k]=image[i][SIZE - j][k];
+
+                    }
+                }
+            }
+        }
+    }
+}
+// flip filter
+void flip() {
+    char alignment;
+    cout<<"Do you want to flip the image (v)ertically or (h)orozontally?";
+    cin >> alignment;
+    if (alignment == 'h'){
+        for (int i = 0; i < SIZE/2; i++){
+            for (int j = 0; j < SIZE; j++){
+                for (int k = 0 ; k < RGB ; k++){
+
+                int temp = image[i][j][k];
+                image[i][j][k]=image[SIZE-i][j][k];
+                image[SIZE-i][j][k]=temp;
+
+                }
+            }
+        }
+    }
+    else if (alignment == 'v'){
+        for (int i = 0; i < SIZE; i++){
+            for (int j = 0; j < SIZE/2; j++){
+                for (int k = 0 ; k < RGB ; k++){
+
+                int temp = image[i][j][k];
+                image[i][j][k]=image[i][SIZE-j][k];
+                image[i][SIZE-j][k]=temp;
+
+                }
             }
         }
     }
