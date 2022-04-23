@@ -32,6 +32,7 @@ void flipImage();
 void rotateImage();
 void darkenLighten();
 void shrinkImage();
+void mirror();
 void blurImage();
 void enlarge();
 void shuffleImage();
@@ -102,7 +103,7 @@ int main() {
             break;
         }
         else if (choice == 'a') {
-            //TODO: mirior()
+            mirror()
             break;
         }
         else if (choice == 'b') {
@@ -522,3 +523,119 @@ void shuffleImage(){
         }
     }
 }
+void mirror()
+{
+    string order;
+    cout << "Please choose which half to mirror : Left1/2, Right1/2, Upper1/2 and Lower1/2"<<endl;
+    cin >> order;
+
+if (order == "upper1/2"){
+    for (int i = 0 ; i <SIZE/2 ; i++)
+    {
+        for (int j = 0 ; j<SIZE ; j++)
+        {
+
+            image[i][j] = image[i][j];
+
+        }
+
+     for (int i = SIZE/2 ; i < SIZE ; i++)
+        {
+            for (int j =0; j < SIZE ; j++)
+            {
+                image[i][j]=image[SIZE-i][j];
+
+            }
+        }
+    }
+
+
+}
+
+else if (order == "left1/2"){
+
+    for (int i = 0 ; i <SIZE ; i++)
+    {
+        for (int j = 0 ; j<SIZE/2 ; j++)
+        {
+
+            image[i][j] = image[i][j];
+
+        }
+
+     for (int i = 0 ; i < SIZE ; i++)
+        {
+            for (int j = SIZE/2; j < SIZE ; j++)
+            {
+                image[i][j]=image[i][SIZE - j];
+
+            }
+        }
+    }
+}
+else if (order == "lower1/2"){
+
+for (int i = 0; i < SIZE/2; i++){
+
+    for (int j = 0; j < SIZE; j++){
+
+            int temp = image[i][j];
+            image[i][j]=image[SIZE-i][j];
+            image[SIZE-i][j]=temp;
+    }
+}
+
+     for (int i = 0 ; i <SIZE/2 ; i++)
+    {
+        for (int j = 0 ; j<SIZE ; j++)
+        {
+
+            image[i][j] = image[i][j];
+
+        }
+
+     for (int i = SIZE/2 ; i < SIZE ; i++)
+        {
+            for (int j =0; j < SIZE ; j++)
+            {
+                image[i][j]=image[SIZE-i][j];
+
+            }
+        }
+    }
+
+
+}
+else if (order == "right1/2"){
+    for (int i = 0; i < SIZE; i++){
+
+        for (int j = 0; j < SIZE/2; j++){
+
+            int temp = image[i][j];
+            image[i][j]=image[i][SIZE-j];
+            image[i][SIZE-j]=temp;
+        }
+    }
+
+    for (int i = 0 ; i <SIZE ; i++)
+    {
+        for (int j = 0 ; j<SIZE/2 ; j++)
+        {
+
+            image[i][j] = image[i][j];
+
+        }
+
+     for (int i = 0 ; i < SIZE ; i++)
+        {
+            for (int j = SIZE/2; j < SIZE ; j++)
+            {
+                image[i][j]=image[i][SIZE - j];
+
+            }
+        }
+    }
+}
+
+}
+
