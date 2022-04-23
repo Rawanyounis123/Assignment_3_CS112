@@ -90,7 +90,8 @@ int main() {
             break;
         }
         else if (choice == '7') {
-            detectEdges()
+            loadImage();
+            detectEdges();
             break;
         }
         else if (choice == '8') {
@@ -104,7 +105,8 @@ int main() {
             break;
         }
         else if (choice == 'a') {
-            mirror()
+            loadImage();
+            mirror();
             break;
         }
         else if (choice == 'b') {
