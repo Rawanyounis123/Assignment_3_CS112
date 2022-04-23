@@ -1,5 +1,5 @@
-/*  FCI - Programming 1 – 2022 - Assignment 3
-    Program Name: CS112- 2022 – S25&26 -20210493-20210501-20210524-A3-Part1.cpp
+/*  FCI - Programming 1 ï¿½ 2022 - Assignment 3
+    Program Name: CS112- 2022 ï¿½ S25&26 -20210493-20210501-20210524-A3-Part1.cpp
     Last Modification Date: 17/04/2022
     Author1 and ID and Group: Salma Gamal
     Author2 and ID and Group: Laila Hesham
@@ -29,6 +29,10 @@ void mergeImages();
 void darkenLighten();
 void shrinkImage();
 void blurImage();
+void invertImage();
+void enlarge();
+void shuffle();
+void rotateImage();
 
 int main() {
     char choice;
@@ -47,57 +51,73 @@ int main() {
         << "a - Mirror 1 / 2 Image\n"
         << "b - Shuffle Image\n"
         << "c - Blur Image\n"
-        << "s - Save the image to a file\n"
         << "0 - Exit\n";
 
         cin >> choice;
         if (choice == '1') {
             //TO DO
+            break;
         }
         else if (choice == '2') {
-            //TO DO
+            loadImage();
+            invertImage();
+            break;
         }
         else if (choice == '3') {
             mergeImages();
+            break;
         }
         else if (choice == '4') {
             //TO DO
+            break;
         }
         else if (choice == '5') {
-            //TO DO
+            loadImage();
+            rotateImage();
+            break;
         }
         else if (choice == '6') {
             loadImage();
             darkenLighten();
+            break;
         }
         else if (choice == '7') {
             //TODO: detectEdges()
+            break;
         }
         else if (choice == '8') {
-            //TODO: enlarge()
+            loadImage();
+            enlarge();
+            break;
         }
         else if (choice == '9') {
             loadImage(image1);
             shrinkImage();
+            break;
         }
         else if (choice == 'a') {
             //TODO: mirior()
+            break;
         }
         else if (choice == 'b') {
-            //TODO: shuffle()
+            loadImage();
+            shuffle();
+            break;
         }
         else if (choice == 'c') {
             loadImage();
             blurImage();
+            break;
         }
-        else if (choice == 's'){
-            saveImage();
-        }
-        else{
+        else if (choice == '0'){
             cout << "Thank you for using our Filters App!";
             break;
         }
+        else{
+            cout << "Enter a valid input";
+        }
     }
+    saveImage();
     return 0;
 }
 
@@ -252,3 +272,207 @@ void blurImage() {
         }
     }
 }
+
+//Shuffles the image to order the quadrants the way the user wants it
+void shuffle(){
+    unsigned char imageOriginal[SIZE][SIZE][RGB];
+    int quadrant1,quadrant2,quadrant3,quadrant4;
+    cout<<"Welcome.Please enter which quadrant you want to place in the first quadrant ";
+    cin>>quadrant1;
+    cout<<"Please enter which quadrant you want to place in the second quadrant ";
+    cin>>quadrant2;
+    cout<<"Please enter which quadrant you want to place in the third quadrant ";
+    cin>>quadrant3;
+    cout<<"Please enter which quadrant you want to place in the fourth quadrant ";
+    cin>>quadrant4;
+    cout<<quadrant1<<quadrant2<<quadrant3<<quadrant4<<endl;
+
+    for(int i = 0; i < SIZE; i++) {
+        for (int j = 0; j< SIZE; j++) {
+                for(int k =0; k<RGB ; k++){
+                    imageOriginal[i][j][k] = image[i][j][k];
+                }
+        }
+    }
+    //quadrant 1:
+    if(quadrant1 != 1){
+        int x = 0;
+        int y = 0;
+        if(quadrant1 == 2 || quadrant1 == 4)
+            y = SIZE/2;
+        if(quadrant1 == 3 || quadrant1 == 4)
+            x = SIZE/2;
+        int y1 = y;
+        for(int i = 0; i < SIZE/2; i++, x++){
+            y = y1;
+            for(int j = 0; j< SIZE/2; j++, y++){
+                for(int k =0; k<RGB ; k++){
+                    image[i][j][k] = imageOriginal[x][y][k];
+                }
+            }
+        }
+    }
+    //quadrant 2:
+    if (quadrant2 !=2){
+        int x=0;
+        int y=0;
+        if(quadrant2 == 4)
+            y = SIZE/2;
+        if(quadrant2 == 3 || quadrant2 == 4)
+            x = SIZE/2;
+        int y1 = y;
+        for (int i = 0; i < SIZE/2; i++, x++){
+            y = y1;
+            for (int j = SIZE/2; j< SIZE; j++, y++){
+                for(int k =0; k<RGB ; k++){
+                    image[i][j][k]=imageOriginal[x][y][k];
+                }
+            }
+        }
+    }
+    //quadrant 3:
+    if(quadrant3 != 3){
+        int x = 0;
+        int y = 0;
+        if(quadrant3 == 2 || quadrant3 == 4)
+            y = SIZE/2;
+        if(quadrant3 == 4)
+            x = SIZE/2;
+        int y1 = y;
+        for (int i = SIZE/2; i < SIZE; i++, x++){
+                y = y1;
+            for (int j = 0; j< SIZE/2; j++, y++){
+                for(int k =0; k<RGB ; k++){
+                    image[i][j][k]=imageOriginal[x][y][k];
+                }
+            }
+        }
+    }
+    //quadrant 4:
+    if(quadrant4 != 4){
+        int x=0;
+        int y=0;
+        if(quadrant4 == 2)
+            y = SIZE/2;
+        if(quadrant4 == 3)
+            x = SIZE/2;
+        int y1 = y;
+        for (int i = SIZE/2; i < SIZE; i++, x++){
+            y = y1;
+            for (int j = SIZE/2; j< SIZE; j++, y++){
+                for(int k =0; k<RGB ; k++){
+                    image[i][j][k]=imageOriginal[x][y][k];
+                }
+            }
+        }
+    }
+}
+
+//Enlarge a certain quadrant
+void enlarge(){
+    int choice;
+    cout<<"Welcome. Enter which quadrant you would like to enlarge(1 to 4)";
+    cin>>choice;
+    unsigned char imageOriginal[SIZE][SIZE][RGB];
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j< SIZE; j++){
+            for (int k =0; k<RGB ; k++){
+                imageOriginal[i][j][k] = image[i][j][k];
+            }
+
+        }
+    }
+    if (choice==1){
+        for (int i = 0; i < SIZE/2; i++){
+            for (int j = 0; j< SIZE/2; j++){
+                 for(int k =0; k<RGB ; k++){
+                    char c = imageOriginal[i][j][k];
+                    image[(i+1)*2-1][(j+1)*2-1][k] = c;
+                    image[(i+1)*2-1][(j+1)*2-2][k] = c;
+                    image[(i+1)*2-2][(j+1)*2-1][k] = c;
+                    image[(i+1)*2-2][(j+1)*2-2][k] = c;
+                 }
+                 }
+                 }
+                 }
+    if (choice==2){
+         for (int i = 0; i < SIZE/2; i++){
+            for (int j = SIZE/2; j< SIZE; j++){
+                 for(int k =0; k<RGB ; k++){
+                     char c = imageOriginal[i][j][k];
+                     image[(i+1)*2-1][2*j - SIZE][k] = c;
+                     image[(i+1)*2-1][2*j - SIZE + 1][k] = c;
+                     image[(i+1)*2-2][2*j - SIZE][k] = c;
+                     image[(i+1)*2-2][2*j - SIZE + 1][k] = c;
+
+            }
+            }
+            }
+            }
+    if (choice==3){
+        for (int i = SIZE/2; i < SIZE; i++){
+            for (int j = 0; j< SIZE/2; j++){
+                for(int k =0; k<RGB ; k++){
+                    char c = imageOriginal[i][j][k];
+                    image[2*i - SIZE][(j+1)*2-1][k] = c;
+                    image[2*i -SIZE][(j+1)*2-2][k] = c;
+                    image[2*i -SIZE + 1][(j+1)*2-1][k] = c;
+                    image[2*i -SIZE + 1][(j+1)*2-2][k] = c;
+                }
+                }
+                }
+                }
+    if (choice==4){
+        for (int i = SIZE/2; i < SIZE; i++){
+            for (int j = SIZE/2; j< SIZE; j++){
+                for(int k =0; k<RGB ; k++){
+                    char c = imageOriginal[i][j][k];
+                    image[2*i - SIZE][2*j - SIZE][k] = c;
+                    image[2*i - SIZE][2*j - SIZE + 1][k] = c;
+                    image[2*i - SIZE + 1][2*j - SIZE][k] = c;
+                    image[2*i - SIZE + 1][2*j - SIZE + 1][k] = c;
+                }
+                }
+                }
+                }
+}
+
+//invert image using colours
+void invertImage() {
+  for (int i = 0; i < SIZE; i++) {
+    for (int j = 0; j< SIZE; j++) {
+        for(int k =0; k<RGB ; k++){
+        image[i][j][k] = 255 - image[i][j][k];
+    }
+  }
+ }
+}
+
+//this function is to rotate the image.
+void rotateImage() {
+    int choice;
+    cout<<"Enter the degree you want to rotate the image with \n 1.90 degrees \n 2.180 degrees \n 3.270 degrees";
+    cin>>choice;
+    char tempArr[SIZE][SIZE][RGB];
+    for (int countRotations = 0; countRotations < choice; countRotations++) {
+        for (int i = 0; i < SIZE; i++){
+            for (int j =0; j<SIZE; j++){
+                for(int k =0; k<RGB ; k++){
+                    tempArr[i][j][k] = image[i][j][k];
+                }
+
+            }
+        }
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j< SIZE; j++) {
+                for(int k =0; k<RGB ; k++){
+                    image[j][SIZE-1-i][k] = tempArr[i][j][k];
+                }
+
+
+
+            }
+        }
+    }
+}
+
