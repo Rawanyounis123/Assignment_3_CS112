@@ -31,6 +31,7 @@ void mergeImages();
 void flipImage();
 void rotateImage();
 void darkenLighten();
+void detectEdges();
 void shrinkImage();
 void mirror();
 void blurImage();
@@ -89,7 +90,7 @@ int main() {
             break;
         }
         else if (choice == '7') {
-            //TODO: detectEdges()
+            detectEdges()
             break;
         }
         else if (choice == '8') {
@@ -638,4 +639,28 @@ else if (order == "right1/2"){
 }
 
 }
+void detectEdges() {
 
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+
+            if (image [i][j] > 127){
+
+                image[i][j] = 255;
+            }
+
+            else {
+                image[i][j] = 0;
+            }
+    }}
+    for (int i = 0 ; i <255; i++){
+        for (int j = 0 ; j < 255; j++){
+            if (image[i][j] != image[i][j+1] || image[i][j] != image[i+1][j]){
+                image[i][j] =0;  
+            }
+            else if (image[i][j] == image[i][j+1] || image[i][j] == image[i+1][j]){
+                image[i][j] = 255;
+            }
+        }
+    }
+}
